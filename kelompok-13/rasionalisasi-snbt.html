@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rasionalisasi Jam Belajar UTBK | The Engine of 2026</title>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --deep-charcoal: #0a0a0a;
+            --charcoal-light: #1a1a1a;
+            --cyber-green: #00ff88;
+            --electric-blue: #00d4ff;
+            --warning-orange: #ff6b00;
+            --danger-red: #ff0055;
+            --steel-gray: #2a2a2a;
+            --text-primary: #e8e8e8;
+            --text-secondary: #888888;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background: var(--deep-charcoal);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Grid Background */
+        .grid-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(0, 255, 136, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 136, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            pointer-events: none;
+            z-index: 0;
+            animation: gridPulse 4s ease-in-out infinite;
+        }
+
+        @keyframes gridPulse {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.6; }
+        }
+
+        .scanline {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--cyber-green), transparent);
+            animation: scan 3s linear infinite;
+            pointer-events: none;
+            z-index: 100;
+            opacity: 0.5;
+        }
+
+        @keyframes scan {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(100vh); }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Header */
+        .header {
+            padding: 2rem 0;
+            border-bottom: 1px solid rgba(0, 255, 136, 0.2);
+            background: linear-gradient(180deg, var(--deep-charcoal) 0%, transparent 100%);
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            backdrop-filter: blur(10px);
+        }
+
+        .logo {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--cyber-green);
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            display: inline-block;
+        }
+
+        .back-link {
+            float: right;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            color: var(--electric-blue);
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--electric-blue);
+            transition: all 0.3s;
+        }
+
+        .back-link:hover {
+            background: var(--electric-blue);
+            color: var(--deep-charcoal);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 4rem 0 3rem;
+            text-align: center;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--cyber-green);
+            border: 1px solid var(--cyber-green);
+            padding: 0.5rem 1rem;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            background: rgba(0, 255, 136, 0.05);
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--text-primary) 0%, var(--cyber-green) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            color: var(--text-secondary);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* Calculator Section */
+        .calculator {
+            background: var(--charcoal-light);
+            border: 2px solid rgba(0, 255, 136, 0.2);
+            padding: 3rem;
+            margin: 3rem 0;
+            position: relative;
+        }
+
+        .calculator::before {
+            content: 'PREDICTIVE MODEL v2.0';
+            position: absolute;
+            top: -1px;
+            left: 2rem;
+            background: var(--deep-charcoal);
+            padding: 0.3rem 1rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            color: var(--cyber-green);
+            letter-spacing: 0.1em;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            color: var(--electric-blue);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .info-box {
+            background: rgba(0, 212, 255, 0.05);
+            border-left: 3px solid var(--electric-blue);
+            padding: 1rem 1.5rem;
+            margin-bottom: 2rem;
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+        }
+
+        .info-box strong {
+            color: var(--electric-blue);
+        }
+
+        /* Form Grid */
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .form-label .required {
+            color: var(--cyber-green);
+        }
+
+        .form-input,
+        .form-select {
+            background: var(--steel-gray);
+            border: 1px solid rgba(0, 255, 136, 0.2);
+            color: var(--text-primary);
+            padding: 0.9rem 1rem;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1rem;
+            transition: all 0.3s;
+            outline: none;
+        }
+
+        .form-input:focus,
+        .form-select:focus {
+            border-color: var(--cyber-green);
+            box-shadow: 0 0 10px rgba(0, 255, 136, 0.2);
+        }
+
+        .form-input::placeholder {
+            color: var(--text-secondary);
+            opacity: 0.5;
+        }
+
+        /* Test Groups */
+        .test-section {
+            margin-bottom: 3rem;
+        }
+
+        .test-section-header {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--cyber-green);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid rgba(0, 255, 136, 0.3);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .subtest-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+
+        /* Calculate Button */
+        .calculate-section {
+            text-align: center;
+            margin: 3rem 0;
+        }
+
+        .calculate-btn {
+            padding: 1.5rem 4rem;
+            background: linear-gradient(135deg, var(--cyber-green), var(--electric-blue));
+            border: none;
+            color: var(--deep-charcoal);
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            cursor: pointer;
+            transition: all 0.4s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .calculate-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .calculate-btn:hover::before {
+            width: 400px;
+            height: 400px;
+        }
+
+        .calculate-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 40px rgba(0, 255, 136, 0.5);
+        }
+
+        .calculate-btn:active {
+            transform: scale(0.98);
+        }
+
+        /* Results Section */
+        .results-section {
+            display: none;
+            background: linear-gradient(135deg, var(--steel-gray) 0%, var(--charcoal-light) 100%);
+            border: 2px solid var(--cyber-green);
+            padding: 3rem;
+            margin: 3rem 0;
+            position: relative;
+            animation: slideIn 0.6s ease-out;
+        }
+
+        .results-section.show {
+            display: block;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .results-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .results-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--cyber-green);
+            margin-bottom: 0.5rem;
+        }
+
+        .results-subtitle {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .total-hours {
+            text-align: center;
+            margin: 2rem 0;
+            padding: 2rem;
+            background: var(--deep-charcoal);
+            border: 1px solid var(--cyber-green);
+        }
+
+        .total-hours-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .total-hours-value {
+            font-size: 4rem;
+            font-weight: 700;
+            color: var(--cyber-green);
+            margin: 0.5rem 0;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .total-hours-desc {
+            font-size: 1rem;
+            color: var(--text-secondary);
+        }
+
+        .weekly-schedule {
+            margin-top: 2rem;
+        }
+
+        .weekly-schedule-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--electric-blue);
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+        }
+
+        .schedule-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+        }
+
+        .schedule-item {
+            background: var(--deep-charcoal);
+            border: 1px solid rgba(0, 255, 136, 0.15);
+            padding: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s;
+        }
+
+        .schedule-item:hover {
+            border-color: var(--cyber-green);
+            transform: translateX(5px);
+        }
+
+        .schedule-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.95rem;
+            color: var(--text-primary);
+        }
+
+        .schedule-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--cyber-green);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* Warning Box */
+        .warning-critical {
+            background: rgba(255, 0, 85, 0.1);
+            border: 2px solid var(--danger-red);
+            padding: 2rem;
+            margin: 2rem 0;
+            text-align: center;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .warning-critical-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .warning-critical-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--danger-red);
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .warning-critical-text {
+            font-size: 1.1rem;
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 1.5rem;
+            }
+
+            .calculator {
+                padding: 2rem 1.5rem;
+            }
+
+            .form-grid,
+            .subtest-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .calculate-btn {
+                width: 100%;
+                padding: 1.2rem 2rem;
+            }
+
+            .results-section {
+                padding: 2rem 1.5rem;
+            }
+
+            .total-hours-value {
+                font-size: 3rem;
+            }
+
+            .back-link {
+                float: none;
+                display: block;
+                margin-top: 1rem;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="grid-background"></div>
+    <div class="scanline"></div>
+
+    <header class="header">
+        <div class="container">
+            <div class="logo">ENGINE//2026</div>
+            <a href="index.html" class="back-link">← Kembali ke Landing Page</a>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <div class="hero-badge">PREDICTIVE ANALYTICS</div>
+                <h1>Rasionalisasi Jam Belajar</h1>
+                <p class="hero-subtitle">Persiapan SNBT — Model Prediktif Berbasis Data</p>
+            </div>
+        </section>
+
+        <section class="container">
+            <div class="calculator">
+                <div class="info-box">
+                    <strong>Catatan:</strong> Jika Anda sering mengikuti tryout, ambil rata-rata 3 nilai tryout terakhir. Namun jika Anda tidak pernah mengikuti tryout, isi dengan angka <strong>300</strong> pada setiap subtes.
+                </div>
+
+                <!-- Metadata Inputs -->
+                <div class="section-title">Input Data Siswa</div>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label">Saat ini saya kelas <span class="required">*</span></label>
+                        <select class="form-select" id="kelas">
+                            <option value="10">Kelas 10 (UTBK 2028)</option>
+                            <option value="11">Kelas 11 (UTBK 2027)</option>
+                            <option value="12" selected>Kelas 12 (UTBK 2026)</option>
+                            <option value="alumni">Alumni (UTBK 2026)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Saya belajar dengan <span class="required">*</span></label>
+                        <select class="form-select" id="metode">
+                            <option value="mandiri">Belajar Mandiri</option>
+                            <option value="bimbel">Bimbingan Belajar</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Tes Skolastik -->
+                <div class="test-section">
+                    <div class="test-section-header">// TES SKOLASTIK</div>
+                    <div class="section-title" style="font-size: 1.2rem; margin-bottom: 1rem;">Nilai Tryout Terakhir</div>
+                    <div class="subtest-grid">
+                        <div class="form-group">
+                            <label class="form-label">Subtes 1 - PU</label>
+                            <input type="number" class="form-input" id="tryout-1" min="300" max="1000" placeholder="300-1000">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Subtes 2 - PPU</label>
+                            <input type="number" class="form-input" id="tryout-2" min="300" max="1000" placeholder="300-1000">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Subtes 3 - PBM</label>
+                            <input type="number" class="form-input" id="tryout-3" min="300" max="1000" placeholder="300-1000">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Subtes 4 - LBI</label>
+                            <input type="number" class="form-input" id="tryout-4" min="300" max="1000" placeholder="300-1000">
+                        </div>
+                    </div>
+
+                    <div class="section-title" style="font-size: 1.2rem; margin: 2rem 0 1rem;">Target Nilai SNBT</div>
+                    <div class="subtest-grid">
+                        <div class="form-group">
+                            <label class="form-label">Subtes 1 - PU</label>
+                            <input type="number" class="form-input" id="target-1" min="300" max="1000" placeholder="300-1000">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Subtes 2 - PPU</label>
+                            <input type="number" class="form-input" id="target-2" min="300" max="1000" placeholder="300-1000">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Subtes 3 - PBM</label>
+                            <input type="number" class="form-input" id="target-3" min="300" max="1000" placeholder="300-1000">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Subtes 4 - LBI</label>
+                            <input type="number" class="form-input" id="target-4" min="300" max="1000" placeholder="300-1000">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tes Literasi -->
+                <div class="test-section">
+                    <div class="test-section-header">// TES LITERASI</div>
+                    <div class="section-title" style="font-size: 1.2rem; margin-bottom: 1rem;">Nilai Tryout Terakhir</div>
+                    <div class="subtest-grid">
+                        <div class="form-group">
+                            <label class="form-label">Subtes 5 - LBE</label>
+                            <input type="number" class="form-input" id="tryout-5" min="300" max="1000" placeholder="300-1000">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Subtes 6 - PK</label>
+                            <input type="number" class="form-input" id="tryout-6" min="300" max="1000" placeholder="300-1000">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Subtes 7 - PM</label>
+                            <input type="number" class="form-input" id="tryout-7" min="300" max="1000" placeholder="300-1000">
+                        </div>
+                    </div>
+
+                    <div class="section-title" style="font-size: 1.2rem; margin: 2rem 0 1rem;">Target Nilai SNBT</div>
+                    <div class="subtest-grid">
+                        <div class="form-group">
+                            <label class="form-label">Subtes 5 - LBE</label>
+                            <input type="number" class="form-input" id="target-5" min="300" max="1000" placeholder="300-1000">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Subtes 6 - PK</label>
+                            <input type="number" class="form-input" id="target-6" min="300" max="1000" placeholder="300-1000">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Subtes 7 - PM</label>
+                            <input type="number" class="form-input" id="target-7" min="300" max="1000" placeholder="300-1000">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="calculate-section">
+                    <button class="calculate-btn" onclick="calculateStudyHours()">Hitung!</button>
+                </div>
+            </div>
+
+            <!-- Results Section -->
+            <div class="results-section" id="results">
+                <div class="results-header">
+                    <div class="results-title">Hasil Estimasi Jam Terbang</div>
+                    <div class="results-subtitle">Model Prediktif Eksponensial dengan Z-Score Transformation</div>
+                </div>
+
+                <div id="warning-container"></div>
+
+                <div class="total-hours">
+                    <div class="total-hours-label">Total Jam Belajar Mingguan</div>
+                    <div class="total-hours-value" id="total-hours">0</div>
+                    <div class="total-hours-desc">jam per minggu hingga SNBT 2026</div>
+                </div>
+
+                <div class="weekly-schedule">
+                    <div class="weekly-schedule-title">Breakdown Mingguan Per Subtes</div>
+                    <div class="schedule-grid" id="schedule-grid">
+                        <!-- Will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Constants from Excel data
+        const CONSTANTS = {
+            bimbel: {
+                'Subtes 1': { B: 60.0, k: 0.5 },
+                'Subtes 2': { B: 50.0, k: 0.45 },
+                'Subtes 3': { B: 50.0, k: 0.45 },
+                'Subtes 4': { B: 50.0, k: 0.45 },
+                'Subtes 5': { B: 55.0, k: 0.5 },
+                'Subtes 6': { B: 75.0, k: 0.55 },
+                'Subtes 7': { B: 75.0, k: 0.55 }
+            },
+            mandiri: {
+                'Subtes 1': { B: 120.0, k: 0.7 },
+                'Subtes 2': { B: 100.0, k: 0.6 },
+                'Subtes 3': { B: 100.0, k: 0.6 },
+                'Subtes 4': { B: 100.0, k: 0.6 },
+                'Subtes 5': { B: 110.0, k: 0.65 },
+                'Subtes 6': { B: 150.0, k: 0.8 },
+                'Subtes 7': { B: 150.0, k: 0.8 }
+            }
+        };
+
+        const SUBTEST_NAMES = {
+            1: 'Subtes 1 - PU (Penalaran Umum)',
+            2: 'Subtes 2 - PPU (Pengetahuan & Pemahaman Umum)',
+            3: 'Subtes 3 - PBM (Pemahaman Bacaan & Menulis)',
+            4: 'Subtes 4 - LBI (Literasi Bahasa Indonesia)',
+            5: 'Subtes 5 - LBE (Literasi Bahasa Inggris)',
+            6: 'Subtes 6 - PK (Penalaran Kuantitatif)',
+            7: 'Subtes 7 - PM (Penalaran Matematika)'
+        };
+
+        function calculateZScore(score) {
+            // Z = (Score - 500) / 100
+            return (score - 500) / 100;
+        }
+
+        function calculateDeltaH(B, k, zTarget, zAwal) {
+            // ΔH = B × (e^(k × Z_target) - e^(k × Z_awal))
+            return B * (Math.exp(k * zTarget) - Math.exp(k * zAwal));
+        }
+
+        function getWeeksUntilSNBT() {
+            // Current date: February 2, 2026
+            const currentDate = new Date('2026-02-02');
+            
+            // Get class level
+            const kelas = document.getElementById('kelas').value;
+            
+            // Determine SNBT date based on class
+            let snbtDate;
+            if (kelas === '10') {
+                snbtDate = new Date('2028-04-21'); // UTBK 2028 for class 10
+            } else if (kelas === '11') {
+                snbtDate = new Date('2027-04-21'); // UTBK 2027 for class 11
+            } else {
+                snbtDate = new Date('2026-04-21'); // UTBK 2026 for class 12 and alumni
+            }
+            
+            const diffTime = snbtDate - currentDate;
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            const weeks = diffDays / 7;
+            
+            return weeks;
+        }
+
+        function calculateStudyHours() {
+            // Get method
+            const metode = document.getElementById('metode').value;
+            const constants = CONSTANTS[metode];
+
+            // Calculate weeks until SNBT
+            const weeksUntilSNBT = getWeeksUntilSNBT();
+
+            let totalMinutesPerWeek = 0;
+            let subtestResults = [];
+
+            // Calculate for each subtest
+            for (let i = 1; i <= 7; i++) {
+                const tryoutValue = parseFloat(document.getElementById(`tryout-${i}`).value) || 300;
+                const targetValue = parseFloat(document.getElementById(`target-${i}`).value) || 300;
+
+                // Calculate Z-scores
+                const zAwal = calculateZScore(tryoutValue);
+                const zTarget = calculateZScore(targetValue);
+
+                // Get constants for this subtest
+                const subtestKey = `Subtes ${i}`;
+                const { B, k } = constants[subtestKey];
+
+                // Calculate ΔH (total hours needed)
+                const deltaH = calculateDeltaH(B, k, zTarget, zAwal);
+
+                // Calculate minutes per week
+                const minutesPerWeek = Math.max(0, (deltaH * 60) / weeksUntilSNBT);
+                
+                // Round up to nearest minute
+                const roundedMinutes = Math.ceil(minutesPerWeek);
+
+                totalMinutesPerWeek += roundedMinutes;
+
+                subtestResults.push({
+                    name: SUBTEST_NAMES[i],
+                    minutes: roundedMinutes
+                });
+            }
+
+            // Convert to hours
+            const totalHoursPerWeek = totalMinutesPerWeek / 60;
+
+            // Display results
+            displayResults(totalHoursPerWeek, subtestResults);
+        }
+
+        function displayResults(totalHours, subtestResults) {
+            const resultsSection = document.getElementById('results');
+            const totalHoursElement = document.getElementById('total-hours');
+            const scheduleGrid = document.getElementById('schedule-grid');
+            const warningContainer = document.getElementById('warning-container');
+
+            // Clear previous warning
+            warningContainer.innerHTML = '';
+
+            // Check for Mission Impossible scenario
+            if (totalHours > 80) {
+                warningContainer.innerHTML = `
+                    <div class="warning-critical">
+                        <div class="warning-critical-icon">⚠️</div>
+                        <div class="warning-critical-title">PERINGATAN: Target Tidak Rasional</div>
+                        <div class="warning-critical-text">
+                            Total jam belajar per minggu melebihi <strong>80 jam</strong>. 
+                            Risiko burnout sangat tinggi. Pertimbangkan untuk menurunkan target 
+                            atau meningkatkan efisiensi belajar dengan menggunakan bimbingan belajar.
+                        </div>
+                    </div>
+                `;
+            }
+
+            // Display total hours
+            totalHoursElement.textContent = totalHours.toFixed(1);
+
+            // Display schedule breakdown
+            scheduleGrid.innerHTML = '';
+            subtestResults.forEach(subtest => {
+                const scheduleItem = document.createElement('div');
+                scheduleItem.className = 'schedule-item';
+                scheduleItem.innerHTML = `
+                    <div class="schedule-label">${subtest.name}</div>
+                    <div class="schedule-value">${subtest.minutes} min</div>
+                `;
+                scheduleGrid.appendChild(scheduleItem);
+            });
+
+            // Show results section with animation
+            resultsSection.classList.add('show');
+            
+            // Smooth scroll to results
+            setTimeout(() => {
+                resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 100);
+        }
+
+        // Initialize default values
+        window.addEventListener('DOMContentLoaded', () => {
+            // Set all inputs to 300 as default
+            for (let i = 1; i <= 7; i++) {
+                document.getElementById(`tryout-${i}`).value = 300;
+                document.getElementById(`target-${i}`).value = 300;
+            }
+        });
+    </script>
+</body>
+</html>
